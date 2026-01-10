@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import img from "../assets/image/aeroplane.jpg"
 import { 
   Plane, 
   Search, 
@@ -24,8 +25,7 @@ import {
 
 const App = () => {
   const [tripType, setTripType] = useState('round-trip'); // 'one-way', 'round-trip', 'multi-city'
-  const [bgImage, setBgImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  
   
   // Multi-city segments state
   const [multiCitySegments, setMultiCitySegments] = useState([
@@ -33,37 +33,9 @@ const App = () => {
     { id: 2, from: '', to: '', date: '' }
   ]);
 
-  const generateBackground = async () => {
-    setIsLoading(true);
-    const apiKey = ""; 
-    const prompt = "Cinematic aerial view of an Etihad Airways plane flying through soft clouds at sunset, gold and blue lighting, 8k realistic";
+ 
 
-    try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            instances: [{ prompt }],
-            parameters: { sampleCount: 1 }
-          })
-        }
-      );
-      const result = await response.json();
-      if (result.predictions?.[0]?.bytesBase64Encoded) {
-        setBgImage(`data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`);
-      }
-    } catch (error) {
-      console.error("BG generation failed", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    generateBackground();
-  }, []);
+ 
 
   const addSegment = () => {
     if (multiCitySegments.length < 5) {
@@ -79,13 +51,13 @@ const App = () => {
     <div className="relative min-h-screen w-full font-sans overflow-x-hidden bg-neutral-900">
       {/* Dynamic Background */}
       <div className="fixed inset-0 z-0">
-        {bgImage && (
+        
           <img 
-            src={bgImage} 
+          src={img}
             alt="Background" 
             className="w-full h-full object-cover transition-opacity duration-1000"
           />
-        )}
+     
         <div className="absolute inset-0 bg-black/40" />
       </div>
 

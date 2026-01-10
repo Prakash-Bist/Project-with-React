@@ -1,119 +1,167 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import { 
-  Menu, 
-  X, 
-  Plane, 
+  Search, 
+  Moon, 
+  Sun, 
   Ticket, 
-  Map, 
-  Palmtree, 
-  HelpCircle, 
-  User 
+  Home, 
+  User, 
+  Menu, 
+  X,
+  Plane,
+  TentTree
 } from 'lucide-react';
 
-const App = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Flight Routes');
+const Navbar = () => {
+  const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('home');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const navLinks = [
-    { name: 'Ticket Status', icon: <Ticket size={18} /> },
-    { name: 'Flight Routes', icon: <Map size={18} /> },
-    { name: 'Holiday', icon: <Palmtree size={18} /> },
-    { name: 'Help', icon: <HelpCircle size={18} /> },
+  // Handle Dark Mode Side Effect
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const navItems = [
+    { id: 'home', label: 'Home',path:'/', icon: <Home size={18} /> },
+    { id: 'ticket', label: 'Ticket Status',path:'/ticketstatus', icon: <Ticket size={18} /> },
+    {id: 'flight routes', label:'Flight Routes',path:'/flightroutes' },
+    { id: 'holiday', label: 'Holiday',path:'/holiday',icon:<TentTree size={18}/> },
+{ id: 'help', label: 'Help',path:'/help',  },
   ];
 
+
   return (
-    <div className="min-h-screen bg-slate-50">
-      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-20">
-            {/* Logo Section */}
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <div className="bg-blue-600 p-2 rounded-lg text-white">
-                <Plane className="transform -rotate-45" size={24} />
-              </div>
-              <span className="text-2xl font-black tracking-tighter text-slate-800">
-                SKY<span className="text-blue-600">PORT</span>
-              </span>
+    <nav className={`sticky top-0 z-50 w-full border-b transition-all duration-300 
+      ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}`}>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          
+          {/* 1. Logo */}
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveTab('home')}>
+            <div className="bg-blue-600 p-1.5 rounded-lg text-white">
+              <Plane size={24} className="transform -rotate-45" />
             </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => setActiveTab(link.name)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 text-sm font-semibold
-                    ${activeTab === link.name 
-                      ? 'bg-blue-50 text-blue-600' 
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                    }`}
-                >
-                  {link.icon}
-                  {link.name}
-                </button>
-              ))}
-              
-              <div className="h-6 w-[1px] bg-slate-200 mx-4"></div>
-              
-              <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95">
-                <User size={18} />
-                Login
-              </button>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden flex items-center">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-md text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors"
-              >
-                {isOpen ? <X size={28} /> : <Menu size={28} />}
-              </button>
-            </div>
+            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
+              SKYPORT
+            </span>
           </div>
-        </div>
 
-        {/* Mobile Navigation Menu */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 border-t border-slate-100' : 'max-h-0'}`}>
-          <div className="px-4 pt-2 pb-6 space-y-2 bg-white">
-            {navLinks.map((link) => (
+          {/* 2. Nav Links (Desktop) */}
+          <div className="hidden md:flex items-center space-x-2">
+            {navItems.map((item) => (
               <button
-                key={link.name}
+                key={item.id}
                 onClick={() => {
-                  setActiveTab(link.name);
-                  setIsOpen(false);
-                }}
-                className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl text-left font-medium
-                  ${activeTab === link.name 
-                    ? 'bg-blue-600 text-white shadow-lg' 
-                    : 'text-slate-600 hover:bg-slate-50'
-                  }`}
+  setActiveTab(item.id);
+  navigate(item.path);
+}}
+
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all
+                  ${activeTab === item.id 
+                    ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400' 
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
               >
-                {link.icon}
-                {link.name}
+                {item.icon}
+                {item.label}
               </button>
             ))}
-            <div className="pt-4 border-t border-slate-100">
-              <button className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white px-4 py-3 rounded-xl font-bold">
-                <User size={18} />
-                Login
-              </button>
+          </div>
+
+          {/* 3. Search, Mode, Login (Desktop) */}
+          <div className="hidden md:flex items-center gap-4">
+            <div className="relative group">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
+              <input 
+                type="text"
+                placeholder="Search flights..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={`pl-10 pr-4 py-2 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all
+                  ${darkMode 
+                    ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-500' 
+                    : 'bg-slate-100 border-transparent placeholder-slate-400'}`}
+              />
             </div>
+
+            <button 
+              onClick={() => setDarkMode(!darkMode)}
+              className={`p-2 rounded-xl transition-colors ${darkMode ? 'bg-slate-800 text-yellow-400' : 'bg-slate-100 text-slate-600'}`}
+              aria-label="Toggle Dark Mode"
+            >
+              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+
+            <button className="flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all shadow-lg shadow-blue-500/20 active:scale-95">
+              <User size={18} />
+              <span>Login</span>
+            </button>
+          </div>
+
+          {/* Mobile UI Buttons */}
+          <div className="md:hidden flex items-center gap-2">
+            <button 
+              onClick={() => setDarkMode(!darkMode)}
+              className={`p-2 rounded-lg ${darkMode ? 'text-yellow-400' : 'text-slate-600'}`}
+            >
+              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg text-slate-600 dark:text-slate-300"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
-      </nav>
+      </div>
 
-      {/* Page Content Placeholder */}
-      <main className="max-w-7xl mx-auto px-4 py-12 text-center">
-        <h1 className="text-4xl font-extrabold text-slate-900 mb-4">
-          Welcome to {activeTab}
-        </h1>
-        <p className="text-slate-500 max-w-2xl mx-auto">
-          This is a preview of the navigation component. Click the items in the navbar to see the active state changes. The mobile view collapses into a clean hamburger menu.
-        </p>
-      </main>
-    </div>
+      {/* Mobile Drawer */}
+      {isMenuOpen && (
+        <div className={`md:hidden p-4 space-y-4 border-t ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'}`}>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <input 
+              type="text"
+              placeholder="Search..."
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 focus:outline-none"
+            />
+          </div>
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+  setActiveTab(item.id);
+  navigate(item.path);
+  setIsMenuOpen(false);
+}}
+
+              className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl font-medium
+                ${activeTab === item.id 
+                  ? 'bg-blue-600 text-white' 
+                  : 'text-slate-600 dark:text-slate-400'}`}
+            >
+              {item.icon}
+              {item.label}
+            </button>
+          ))}
+          <button className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 text-white font-bold">
+            <User size={18} />
+            Login
+          </button>
+        </div>
+      )}
+    </nav>
   );
 };
 
-export default App;
+export default Navbar;
