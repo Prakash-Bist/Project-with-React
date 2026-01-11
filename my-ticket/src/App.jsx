@@ -6,13 +6,15 @@ import Navbar from './components/Navbar'
 import Flightcard from "./components/Flightcard";
 import Footer from "./components/Footer";
 import Question from "./components/Question";
-import Visit from "./components/Visit";
+import Visit from "./components/VisitNepal";
 import Show from "./components/Show";
 import Home from "./components/Home";
-import Ticketstatus from './components/Ticketstatus';
+import Ticketstatus from './components/Ticket status';
 import Help from './components/Help';
 import Holiday from './components/Holiday';
 import Flightroutes from './components/Flightroutes';
+
+
 function App() {
 
 
@@ -28,8 +30,9 @@ function App() {
 <Route path="/help" element={<Help/>} />
 <Route path="/holiday" element={<Holiday/>} />
 <Route path="/flightroutes" element={<Flightroutes/>} />
+
 </Routes>
-     
+
      <Footer/>
     
    
