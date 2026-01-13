@@ -13,31 +13,31 @@ import Ticketstatus from './components/Ticket status';
 import Help from './components/Help';
 import Holiday from './components/Holiday';
 import Flightroutes from './components/Flightroutes';
+import Loginpage from './components/Loginpage';
 
 
 function App() {
-
-
   return (
-    <>
-<Navbar/> 
-<Routes>
-<Route path="/" element={<Home />} />
-<Route path="/visit" element={<Visit />} />
-<Route path="/show" element={<Show />} />
-<Route path="/question" element={<Question />} />
-<Route path="/ticketstatus" element={<Ticketstatus/>} />
-<Route path="/help" element={<Help/>} />
-<Route path="/holiday" element={<Holiday/>} />
-<Route path="/flightroutes" element={<Flightroutes/>} />
+    <div className="app-wrapper">
+      <Navbar />
 
-</Routes>
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/visit" element={<Visit />} />
+          <Route path="/show" element={<Show />} />
+          <Route path="/question" element={<Question />} />
+          <Route path="/ticketstatus" element={<Ticketstatus />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/holiday" element={<Holiday />} />
+          <Route path="/flightroutes" element={<Flightroutes />} />
+          <Route path="/loginpage" element={<Loginpage />}  />
+        </Routes>
+      </main>
 
-     <Footer/>
-    
-   
-    </>
-  )
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;

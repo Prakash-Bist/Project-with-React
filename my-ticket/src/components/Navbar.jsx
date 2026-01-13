@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Link} from "react-router-dom";
 import { 
   Search, 
   Moon, 
@@ -101,10 +100,10 @@ const Navbar = () => {
               {darkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
-            <button className="flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all shadow-lg shadow-blue-500/20 active:scale-95">
+            <Link to="/loginpage" className="flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all shadow-lg shadow-blue-500/20 active:scale-95">
               <User size={18} />
               <span>Login</span>
-            </button>
+            </Link>
           </div>
 
           {/* Mobile UI Buttons */}

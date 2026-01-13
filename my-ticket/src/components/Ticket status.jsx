@@ -1,8 +1,9 @@
 import React from 'react';
+import imag1 from '../assets/image/Show/Terminal.jpeg';
 
 // Sample data for cards
 const cardData = [
-  { title: 'Check In', img: '/images/checkin.jpg' },
+  { title: 'Check In', img: imag1 },
   { title: 'Baggage', img: '/images/baggage.jpg' },
   { title: 'Requests', img: '/images/requests.jpg' },
   { title: 'Visas and Immigration', img: '/images/passport.jpg' },
@@ -12,42 +13,21 @@ const cardData = [
 
 function Ticketstatus() {
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-      gap: '20px',
-      padding: '2rem'
-    }}>
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-5 p-8">
       {cardData.map((card, index) => (
-        <div key={index} style={{
-          position: 'relative',
-          borderRadius: '10px',
-          overflow: 'hidden',
-          cursor: 'pointer',
-          boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
-          transition: 'transform 0.3s'
-        }}
-        onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
-        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+        <div
+          key={index}
+          className="relative overflow-hidden rounded-lg cursor-pointer shadow-md transition-transform duration-300 hover:scale-105"
         >
-          <img 
-            src={card.img} 
-            alt={card.title} 
-            style={{ width: '100%', height: '200px', objectFit: 'cover' }} 
+          <img
+            src={card.img}
+            alt={card.title}
+            className="w-full h-[200px] object-cover"
           />
-          <div style={{
-            position: 'absolute',
-            bottom: '0',
-            width: '100%',
-            padding: '10px 15px',
-            background: 'rgba(0,0,0,0.5)',
-            color: 'white',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
+
+          <div className="absolute bottom-0 w-full px-4 py-2 bg-black/50 text-white flex items-center justify-between">
             <span>{card.title}</span>
-            <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>›</span>
+            <span className="text-xl font-bold">›</span>
           </div>
         </div>
       ))}
