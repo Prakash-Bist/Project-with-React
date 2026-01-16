@@ -14,6 +14,10 @@ import Help from './components/Help';
 import Holiday from './components/Holiday';
 import Flightroutes from './components/Flightroutes';
 import Loginpage from './components/Loginpage';
+import VisitNepalBanner from './components/Show';
+import VisitNepal from './components/VisitNepal';
+import Plan from './components/Plan';
+
 
 
 function App() {
@@ -32,6 +36,7 @@ function App() {
           <Route path="/holiday" element={<Holiday />} />
           <Route path="/flightroutes" element={<Flightroutes />} />
           <Route path="/loginpage" element={<Loginpage />}  />
+          <Route path="/plan" element={<Plan/>} />
         </Routes>
       </main>
 
